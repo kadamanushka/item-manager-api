@@ -1,7 +1,7 @@
 package com.example.itemmanager.service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -10,22 +10,16 @@ import com.example.itemmanager.model.Item;
 @Service
 public class ItemService {
 
-    private List<Item> items = new ArrayList<>();
+    private final Map<Integer, Item> items = new HashMap<>();
+    private int currentId = 1;
 
-    // Add item
     public Item addItem(Item item) {
-        items.add(item);
+        item.setId(currentId++);
+        items.put(item.getId(), item);
         return item;
     }
 
-    // Get by ID
     public Item getItemById(int id) {
-
-        for (Item item : items) {
-            if (item.getId() == id) {
-                return item;
-            }
-        }
-        return null;
+        return items.get(id);
     }
 }
