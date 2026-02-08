@@ -3,7 +3,6 @@ package com.example.itemmanager.controller;
 import com.example.itemmanager.model.Item;
 import com.example.itemmanager.service.ItemService;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,31 +12,35 @@ import java.util.List;
 @RequestMapping("/api/items")
 public class ItemController {
 
-    private final ItemService itemService;
+    private final ItemService service;
 
-    public ItemController(ItemService itemService) {
-        this.itemService = itemService;
+    public ItemController(ItemService service) {
+        this.service = service;
     }
 
-    // 1️⃣ Add new item
+    // Root health check
+    @GetMapping("/")
+    public String home() {
+        return "Item Manager API is running 🚀";
+    }
+
+    // Add new item
     @PostMapping
     public ResponseEntity<Item> addItem(@Valid @RequestBody Item item) {
-        return new ResponseEntity<>(itemService.addItem(item), HttpStatus.CREATED);
+        return ResponseEntity.ok(service.addItem(item));
     }
 
-    // 2️⃣ Get item by ID
+    // Get item by ID
     @GetMapping("/{id}")
     public ResponseEntity<Item> getItem(@PathVariable Long id) {
-        Item item = itemService.getItemById(id);
-        if (item == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(item);
+        return service.getItemById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
-    // (Extra helper) Get all items
+    // (Optional but useful)
     @GetMapping
-    public List<Item> getAllItems() {
-        return itemService.getAllItems();
+    public List<Item> getAll() {
+        return service.getAllItems();
     }
 }

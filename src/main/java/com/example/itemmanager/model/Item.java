@@ -11,11 +11,10 @@ public class Item {
     @NotBlank(message = "Name is required")
     private String name;
 
-    @NotBlank(message = "Description is required")
     private String description;
 
-    @NotNull
-    @Positive(message = "Price must be greater than 0")
+    @NotNull(message = "Price is required")
+    @Positive(message = "Price must be positive")
     private Double price;
 
     public Item() {}
