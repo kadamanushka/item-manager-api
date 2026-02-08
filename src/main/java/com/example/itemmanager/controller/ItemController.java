@@ -17,12 +17,12 @@ public class ItemController {
     private ItemService itemService;
 
     @PostMapping
-    public ResponseEntity<Item> addItem(@Valid @RequestBody Item item) {
+    public ResponseEntity<?> addItem(@Valid @RequestBody Item item) {
         return ResponseEntity.ok(itemService.addItem(item));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Item> getItem(@PathVariable int id) {
+    public ResponseEntity<?> getItem(@PathVariable int id) {
         Item item = itemService.getItemById(id);
         if (item == null) {
             return ResponseEntity.notFound().build();

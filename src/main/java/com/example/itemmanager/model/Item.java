@@ -1,25 +1,15 @@
 package com.example.itemmanager.model;
 
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
 public class Item {
 
     private int id;
 
-    @NotBlank(message = "Name is required")
+    @NotBlank
     private String name;
 
-    @Min(value = 1, message = "Price must be greater than 0")
     private double price;
-
-    public Item() {}
-
-    public Item(int id, String name, double price) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-    }
 
     public int getId() {
         return id;

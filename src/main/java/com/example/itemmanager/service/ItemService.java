@@ -10,16 +10,16 @@ import com.example.itemmanager.model.Item;
 @Service
 public class ItemService {
 
-    private final Map<Integer, Item> items = new HashMap<>();
-    private int currentId = 1;
+    private Map<Integer, Item> store = new HashMap<>();
+    private int counter = 1;
 
     public Item addItem(Item item) {
-        item.setId(currentId++);
-        items.put(item.getId(), item);
+        item.setId(counter++);
+        store.put(item.getId(), item);
         return item;
     }
 
     public Item getItemById(int id) {
-        return items.get(id);
+        return store.get(id);
     }
 }
