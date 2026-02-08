@@ -1,25 +1,31 @@
 package com.example.itemmanager.service;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import com.example.itemmanager.model.Item;
 import org.springframework.stereotype.Service;
 
-import com.example.itemmanager.model.Item;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ItemService {
 
-    private Map<Integer, Item> store = new HashMap<>();
-    private int counter = 1;
+    private final List<Item> items = new ArrayList<>();
+    private Long nextId = 1L;
 
     public Item addItem(Item item) {
-        item.setId(counter++);
-        store.put(item.getId(), item);
+        item.setId(nextId++);
+        items.add(item);
         return item;
     }
 
-    public Item getItemById(int id) {
-        return store.get(id);
+    public Item getItemById(Long id) {
+        return items.stream()
+                .filter(item -> item.getId().equals(id))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public List<Item> getAllItems() {
+        return items;
     }
 }

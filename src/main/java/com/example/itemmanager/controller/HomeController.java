@@ -8,6 +8,6 @@ public class HomeController {
 
     @GetMapping("/")
     public String home() {
-        return "Item Manager API is running 🚀";
+        return "Item Manager API is running";
     }
 }
